@@ -1,47 +1,28 @@
 import { loadImages } from "./loadImages";
-
-const canvas = document.createElement("canvas");
-canvas.setAttribute("id", "gamecanvas");
-const ctx = canvas.getContext("2d");
-canvas.width = 300;
-canvas.height = 300;
-document.body.appendChild(canvas);
+import { loadSounds } from "./loadSounds";
+import { createGameCanvas } from "./createGameCanvas";
+import { runGame } from "./runGame";
 
 const imagesFolder = "images";
 const imageFiles = ["bk.png", "ground.png"];
+const soundsFolder = "audio";
+const soundFiles = ["game.mp3"];
 
-const loadAssets = async () => {
+const initAndRunGame = async () => {
   try {
+    const canvasReference = createGameCanvas();
     const images = await loadImages(
       imageFiles.map((image) => imagesFolder + "/" + image)
     );
-    return images;
+    const sounds = await loadSounds(
+      soundFiles.map((sound) => soundsFolder + "/" + sound)
+    );
+    const assets = { images: images, sounds: sounds };
+    runGame(canvasReference, assets);
   } catch (err) {
-    console.error("Could not load fukcing image");
+    console.error("Could not initialize and run game:", err);
   }
 };
 
-loadAssets()
-  .then((imgs) => {
-    const ground = imgs[0];
-    ctx.drawImage(ground, 0, 0);
-  })
-  .catch((err) => console.log(err));
-
-/*
-loadImage("images/ground.png")
-  .then((ground) => {
-    var imgwidth = ground.width;
-    var imgheight = ground.height;
-    canvas.width = imgwidth * 2;
-    canvas.height = imgheight * 2;
-    ctx.scale(2, 2);
-    ctx.drawImage(ground, 1, 1);
-  })
-  .catch((err) =>
-    console.log(
-      "Error loading image",
-      console.error(err.name + ": " + err.message)
-    )
-  );
-*/
+document.getElementById("body").addEventListener("click", initAndRunGame);
+// initAndRunGame();

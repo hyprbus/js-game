@@ -1,10 +1,16 @@
 #gamecanvas {
   height: 600px;
   width: 600px;
-  position: absolute;
   image-rendering: -moz-crisp-edges;
   image-rendering: -webkit-crisp-edges;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
-  margin: auto;
+}
+
+body {
+  max-width: 1024px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
