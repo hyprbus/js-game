@@ -1,23 +1,22 @@
 import { loadImages } from "./loadImages";
 import { loadSounds } from "./loadSounds";
 import { createGameCanvas } from "./createGameCanvas";
-import { runGame } from "./runGame";
+// import { runGame } from "./runGame";
+import Game from "./game";
 
 const imagesFolder = "images";
-const imageFiles = ["bk.png", "ground.png"];
+const imageFiles = ["bk.png", "ground.png", "rocket.png"];
 const soundsFolder = "audio";
 const soundFiles = ["game.mp3"];
 const gameCanvasId = "ctx";
+const GAME_WIDTH = 800;
+const GAME_HEIGHT = 600;
+const ctx = createGameCanvas(gameCanvasId, GAME_WIDTH, GAME_HEIGHT);
+
+let lastTime = 0;
 
 const initAndRunGame = async () => {
   try {
-    const ctx = createGameCanvas(gameCanvasId);
-    window.onload = function () {
-      ctx.font = "20px VT323";
-      ctx.fillText("Click to start game", 20, 20);
-      ctx.stroke();
-    };
-
     const images = await loadImages(
       imageFiles.map((image) => imagesFolder + "/" + image)
     );
@@ -25,9 +24,18 @@ const initAndRunGame = async () => {
       soundFiles.map((sound) => soundsFolder + "/" + sound)
     );
     const assets = { images: images, sounds: sounds };
-    document
-      .getElementById(gameCanvasId)
-      .addEventListener("click", () => runGame(ctx, assets));
+    let game = new Game(GAME_WIDTH, GAME_HEIGHT, assets);
+    function gameLoop(timestamp) {
+      let deltaTime = timestamp - lastTime;
+      lastTime = timestamp;
+      ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+
+      game.update(deltaTime);
+      game.draw(ctx);
+
+      requestAnimationFrame(gameLoop);
+    }
+    requestAnimationFrame(gameLoop);
   } catch (err) {
     console.error("Could not initialize and run game:", err);
   }
