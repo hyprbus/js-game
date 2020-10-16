@@ -3,6 +3,7 @@ import { detectCollision } from "./detectCollision";
 export default class Alien {
   constructor(game, position) {
     this.image = game.assets.images.alien;
+    this.sound = game.assets.sounds[2];
     this.gameWidth = game.gameWidth;
     this.gameHeight = game.gameHeight;
     this.game = game;
@@ -25,14 +26,17 @@ export default class Alien {
   }
 
   update(deltaTime) {
-    if (this.game.laser.isShooting && detectCollision(this.game.laser, this)) {
-      this.markedForDeletion = true;
-      this.game.laser.reset();
-    }
-
     if (detectCollision(this.game.rocket, this)) {
       this.game.laser.reset();
       this.game.subtractLife();
+    }
+
+    if (this.game.laser.isShooting && detectCollision(this.game.laser, this)) {
+      this.sound.pause();
+      this.sound.currentTime = 0;
+      this.sound.play();
+      this.markedForDeletion = true;
+      this.game.laser.reset();
     }
 
     this.position.x += this.vector.x;

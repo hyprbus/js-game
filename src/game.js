@@ -38,7 +38,6 @@ export default class Game {
       this.gamestate !== GAMESTATE.NEWLEVEL
     )
       return;
-
     this.aliens = buildLevel(this);
     console.log(this.aliens);
     this.gameObjects = [this.background, this.rocket, this.laser];
@@ -47,6 +46,10 @@ export default class Game {
   }
 
   subtractLife() {
+    const deathSound = this.assets.sounds[3];
+    deathSound.pause();
+    deathSound.currentTime = 0;
+    deathSound.play();
     this.lives = 0;
   }
 

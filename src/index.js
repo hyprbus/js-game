@@ -11,7 +11,7 @@ const imageFiles = [
   { alien: "images/alien.png" },
 ];
 const soundsFolder = "audio";
-const soundFiles = ["game.mp3", "laser.mp3"];
+const soundFiles = ["game.mp3", "laser.mp3", "explosion.mp3", "death.mp3"];
 const gameCanvasId = "ctx";
 const GAME_WIDTH = 800;
 const GAME_HEIGHT = 600;

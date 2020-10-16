@@ -7,6 +7,7 @@ export function detectCollision(source, target) {
   let rightSideOfTarget = target.position.x + target.width;
   let bottomOfTarget = target.position.y + target.height;
 
+  // fix collision detection, not right! Should be when they touch, isn't now.
   if (
     bottomOfSource >= topOfTarget &&
     topOfSource <= bottomOfTarget &&
