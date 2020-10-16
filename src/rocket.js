@@ -1,8 +1,8 @@
 export default class Rocket {
-  constructor(game, img) {
+  constructor(game) {
     this.gameWidth = game.gameWidth;
 
-    this.image = img;
+    this.image = game.assets.images.rocket;
     this.width = 16;
     this.height = 16;
     this.maxSpeed = 7;

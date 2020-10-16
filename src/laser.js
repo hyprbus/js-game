@@ -2,54 +2,59 @@
 
 export default class Laser {
   constructor(game) {
-    this.image = document.getElementById("img_ball");
-
+    this.image = game.assets.images.laser;
+    this.sound = game.assets.sounds[1];
     this.gameWidth = game.gameWidth;
     this.gameHeight = game.gameHeight;
-
     this.game = game;
-    this.size = 16;
+    this.width = 4;
+    this.height = 16;
+    this.position = { x: 400, y: 550 };
+    this.isShooting = false;
     this.reset();
   }
 
   reset() {
-    this.position = { x: 10, y: 400 };
-    this.speed = { x: 4, y: -2 };
+    this.position = { x: 400, y: 550 };
+    this.speed = { x: 0, y: -4 };
+    this.isShooting = false;
+  }
+
+  fire() {
+    if (this.isShooting) return;
+    this.position.x =
+      this.game.rocket.position.x + this.game.rocket.width / 2 - this.width / 2;
+    this.position.y = this.game.rocket.position.y - this.height;
+    this.sound.pause();
+    this.sound.currentTime = 0;
+    this.sound.play();
+    this.isShooting = true;
   }
 
   draw(ctx) {
+    if (!this.isShooting) return;
     ctx.drawImage(
       this.image,
       this.position.x,
       this.position.y,
-      this.size,
-      this.size
+      this.width,
+      this.height
     );
   }
 
   update(deltaTime) {
-    this.position.x += this.speed.x;
+    if (!this.isShooting) return;
     this.position.y += this.speed.y;
 
-    // wall on left or right
-    if (this.position.x + this.size > this.gameWidth || this.position.x < 0) {
-      this.speed.x = -this.speed.x;
-    }
-
-    // wall on top
     if (this.position.y < 0) {
-      this.speed.y = -this.speed.y;
-    }
-
-    // bottom of game
-    if (this.position.y + this.size > this.gameHeight) {
-      this.game.lives--;
       this.reset();
     }
 
+    /*
     if (detectCollision(this, this.game.paddle)) {
       this.speed.y = -this.speed.y;
       this.position.y = this.game.paddle.position.y - this.size;
     }
+    */
   }
 }

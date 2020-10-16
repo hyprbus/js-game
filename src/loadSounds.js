@@ -10,6 +10,6 @@ export const loadSounds = async (urls) => {
   try {
     return await Promise.all(urls.map((url) => loadSound(url)));
   } catch (err) {
-    console.log("error loading audio assets");
+    console.error("error loading audio assets");
   }
 };

@@ -1,5 +1,5 @@
 export default class InputHandler {
-  constructor(rocket, game) {
+  constructor(rocket, laser, game) {
     document.addEventListener("keydown", (event) => {
       switch (event.keyCode) {
         case 37:
@@ -10,13 +10,16 @@ export default class InputHandler {
           rocket.moveRight();
           break;
 
+        case 32:
+          laser.fire();
+          break;
+
         case 27:
           game.togglePause();
           break;
 
-        case 32:
+        case 13:
           game.start();
-          console.log("start...");
           break;
       }
     });
