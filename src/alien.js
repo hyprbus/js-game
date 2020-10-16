@@ -1,3 +1,5 @@
+import { detectCollision } from "./detectCollision";
+
 export default class Alien {
   constructor(game, position) {
     this.image = game.assets.images.alien;
@@ -9,6 +11,7 @@ export default class Alien {
     this.position = { x: position.x, y: position.y };
     this.speed = game.gameSpeed;
     this.vector = { x: this.speed, y: 0 };
+    this.markedForDeletion = false;
   }
 
   draw(ctx) {
@@ -22,6 +25,16 @@ export default class Alien {
   }
 
   update(deltaTime) {
+    if (this.game.laser.isShooting && detectCollision(this.game.laser, this)) {
+      this.markedForDeletion = true;
+      this.game.laser.reset();
+    }
+
+    if (detectCollision(this.game.rocket, this)) {
+      this.game.laser.reset();
+      this.game.subtractLife();
+    }
+
     this.position.x += this.vector.x;
     this.position.y += this.vector.y;
 

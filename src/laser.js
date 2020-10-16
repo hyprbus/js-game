@@ -1,5 +1,3 @@
-// import { detectCollision } from "./collisionDetection";
-
 export default class Laser {
   constructor(game) {
     this.image = game.assets.images.laser;

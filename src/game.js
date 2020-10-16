@@ -46,6 +46,10 @@ export default class Game {
     this.gamestate = GAMESTATE.RUNNING;
   }
 
+  subtractLife() {
+    this.lives = 0;
+  }
+
   update(deltaTime) {
     if (this.lives === 0) this.gamestate = GAMESTATE.GAMEOVER;
 
@@ -59,7 +63,7 @@ export default class Game {
       object.update(deltaTime)
     );
 
-    // this.bricks = this.bricks.filter((brick) => !brick.markedForDeletion);
+    this.aliens = this.aliens.filter((alien) => !alien.markedForDeletion);
   }
 
   draw(ctx) {

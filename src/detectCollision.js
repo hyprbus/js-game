@@ -1,0 +1,20 @@
+export function detectCollision(source, target) {
+  let bottomOfSource = source.position.y + source.height;
+  let topOfSource = source.position.y;
+
+  let topOfTarget = target.position.y;
+  let leftSideOfTarget = target.position.x;
+  let rightSideOfTarget = target.position.x + target.width;
+  let bottomOfTarget = target.position.y + target.height;
+
+  if (
+    bottomOfSource >= topOfTarget &&
+    topOfSource <= bottomOfTarget &&
+    source.position.x >= leftSideOfTarget &&
+    source.position.x + source.width <= rightSideOfTarget
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+}
