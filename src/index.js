@@ -1,7 +1,6 @@
 import { loadImages } from "./loadImages";
 import { loadSounds } from "./loadSounds";
 import { createGameCanvas } from "./createGameCanvas";
-// import { runGame } from "./runGame";
 import Game from "./game";
 
 const imageFiles = [

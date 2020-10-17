@@ -1,3 +1,5 @@
+import { GAMESTATE } from "./constants";
+
 export default class Laser {
   constructor(game) {
     this.image = game.assets.images.laser;
@@ -19,7 +21,7 @@ export default class Laser {
   }
 
   fire() {
-    if (this.isShooting) return;
+    if (this.isShooting || this.game.gamestate != GAMESTATE.RUNNING) return;
     this.position.x =
       this.game.rocket.position.x + this.game.rocket.width / 2 - this.width / 2;
     this.position.y = this.game.rocket.position.y - this.height;
@@ -47,12 +49,5 @@ export default class Laser {
     if (this.position.y < 0) {
       this.reset();
     }
-
-    /*
-    if (detectCollision(this, this.game.paddle)) {
-      this.speed.y = -this.speed.y;
-      this.position.y = this.game.paddle.position.y - this.size;
-    }
-    */
   }
 }

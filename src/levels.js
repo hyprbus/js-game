@@ -13,7 +13,6 @@ export function buildLevel(game) {
           x: 10 + 32 * alienIndex,
           y: 10 + 32 * rowIndex,
         };
-        console.log(position);
         aliens.push(new Alien(game, position));
       }
     });

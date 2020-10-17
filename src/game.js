@@ -2,15 +2,9 @@ import Rocket from "./rocket";
 import Background from "./background";
 import InputHandler from "./input";
 import Laser from "./laser";
+import Particle from "./particle";
 import { buildLevel } from "./levels";
-
-const GAMESTATE = {
-  PAUSED: 0,
-  RUNNING: 1,
-  MENU: 2,
-  GAMEOVER: 3,
-  NEWLEVEL: 4,
-};
+import { GAMESTATE, LIVES } from "./constants";
 
 export default class Game {
   constructor(gameWidth, gameHeight, assets) {
@@ -23,8 +17,9 @@ export default class Game {
     this.laser = new Laser(this);
     this.background = new Background(this, assets.images.background);
     this.gameObjects = [];
-    this.lives = 3;
+    this.lives = LIVES;
     this.aliens = [];
+    this.explosions = [];
 
     // this.levels = [level1, level2];
     // this.currentLevel = 0;
@@ -35,11 +30,12 @@ export default class Game {
   start() {
     if (
       this.gamestate !== GAMESTATE.MENU &&
-      this.gamestate !== GAMESTATE.NEWLEVEL
+      this.gamestate !== GAMESTATE.NEWLEVEL &&
+      this.gamestate !== GAMESTATE.GAMEOVER
     )
       return;
+    this.lives = LIVES;
     this.aliens = buildLevel(this);
-    console.log(this.aliens);
     this.gameObjects = [this.background, this.rocket, this.laser];
 
     this.gamestate = GAMESTATE.RUNNING;
@@ -62,15 +58,31 @@ export default class Game {
       this.gamestate === GAMESTATE.GAMEOVER
     )
       return;
-    [...this.gameObjects, ...this.aliens].forEach((object) =>
-      object.update(deltaTime)
-    );
+    [
+      ...this.gameObjects,
+      ...this.aliens,
+      ...this.explosions,
+    ].forEach((object) => object.update(deltaTime));
 
+    this.explosions = this.explosions.filter(
+      (particle) => !particle.markedForDeletion
+    );
+    this.aliens.forEach((alien) => {
+      if (alien.markedForDeletion) {
+        for (let i = 0; i < 20; i++) {
+          this.explosions.push(new Particle(this, alien.position));
+        }
+      }
+    });
     this.aliens = this.aliens.filter((alien) => !alien.markedForDeletion);
   }
 
   draw(ctx) {
-    [...this.gameObjects, ...this.aliens].forEach((object) => object.draw(ctx));
+    [
+      ...this.gameObjects,
+      ...this.aliens,
+      ...this.explosions,
+    ].forEach((object) => object.draw(ctx));
 
     if (this.gamestate === GAMESTATE.PAUSED) {
       ctx.rect(0, 0, this.gameWidth, this.gameHeight);
@@ -102,6 +114,11 @@ export default class Game {
       ctx.fillStyle = "white";
       ctx.textAlign = "center";
       ctx.fillText("GAME OVER", this.gameWidth / 2, this.gameHeight / 2);
+      ctx.fillText(
+        "Press ENTER to play again",
+        this.gameWidth / 2,
+        this.gameHeight / 2 + 40
+      );
     }
   }
 
