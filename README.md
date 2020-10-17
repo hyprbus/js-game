@@ -6,11 +6,8 @@
 
 ## todo
 
-- levels
+- finish game screen when all levels won
 - animate rocket on turn left / right
-- score counter
-- lives counter
-- how to reset after life lost
 
 ### refactor & bugs
 
@@ -29,3 +26,7 @@
 - restart game after game over
 - prevent fire if not in play mode
 - explosion particle effect
+- score counter
+- lives counter
+- how to reset after life lost
+- levels

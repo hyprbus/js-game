@@ -15,7 +15,12 @@ const level3 = [
   [0, 0, 1, 0, 0],
 ];
 
-export const levels = [level0, level1, level2, level3];
+const level4 = [
+  [1, 1, 1, 1, 1, 1, 1, 1],
+  [1, 1, 1, 1, 1, 1, 1, 1],
+];
+
+export const levels = [level0, level1, level2, level3, level4];
 
 export function buildLevel(game, level) {
   let aliens = [];
