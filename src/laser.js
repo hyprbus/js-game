@@ -21,7 +21,12 @@ export default class Laser {
   }
 
   fire() {
-    if (this.isShooting || this.game.gamestate != GAMESTATE.RUNNING) return;
+    if (
+      this.isShooting ||
+      this.game.gamestate != GAMESTATE.RUNNING ||
+      this.game.rocket.isExploding
+    )
+      return;
     this.position.x =
       this.game.rocket.position.x + this.game.rocket.width / 2 - this.width / 2;
     this.position.y = this.game.rocket.position.y - this.height;

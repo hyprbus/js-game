@@ -13,6 +13,7 @@ export default class Alien {
     this.speed = game.gameSpeed;
     this.vector = { x: this.speed, y: 0 };
     this.markedForDeletion = false;
+    this.hitScore = 100;
   }
 
   draw(ctx) {
@@ -27,8 +28,7 @@ export default class Alien {
 
   update(deltaTime) {
     if (detectCollision(this.game.rocket, this)) {
-      this.game.laser.reset();
-      this.game.subtractLife();
+      this.game.rocketHitByAlien();
     }
 
     if (this.game.laser.isShooting && detectCollision(this.game.laser, this)) {
@@ -36,6 +36,7 @@ export default class Alien {
       this.sound.currentTime = 0;
       this.sound.play();
       this.markedForDeletion = true;
+      this.game.score = this.game.score + this.hitScore;
       this.game.laser.reset();
     }
 

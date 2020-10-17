@@ -1,11 +1,24 @@
 import Alien from "./alien";
 
-export function buildLevel(game) {
+const level0 = [[1]];
+
+const level1 = [[1, 1, 1, 1, 1]];
+
+const level2 = [
+  [1, 0, 1, 0, 1],
+  [1, 1, 1, 1, 1],
+];
+
+const level3 = [
+  [1, 1, 1, 1, 1],
+  [0, 1, 1, 1, 0],
+  [0, 0, 1, 0, 0],
+];
+
+export const levels = [level0, level1, level2, level3];
+
+export function buildLevel(game, level) {
   let aliens = [];
-  const level = [
-    [1, 1, 1, 1, 1],
-    [1, 0, 1, 0, 1],
-  ];
   level.forEach((row, rowIndex) => {
     row.forEach((alien, alienIndex) => {
       if (alien === 1) {

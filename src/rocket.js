@@ -11,6 +11,7 @@ export default class Rocket {
       x: game.gameWidth / 2 - this.width / 2,
       y: game.gameHeight - this.height - 16,
     };
+    this.isExploding = false;
   }
 
   moveLeft() {
@@ -26,6 +27,7 @@ export default class Rocket {
   }
 
   draw(ctx) {
+    if (this.isExploding) return;
     ctx.drawImage(
       this.image,
       this.position.x,

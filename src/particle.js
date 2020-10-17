@@ -1,12 +1,10 @@
 import { rgbaToString } from "./utils";
 
 export default class Particle {
-  constructor(game, position) {
+  constructor(game, position, radius, lifeLength = 20) {
     this.gameWidth = game.gameWidth;
     this.gameHeight = game.gameHeight;
     this.game = game;
-    this.width = 4;
-    this.height = 16;
     this.position = { x: position.x, y: position.y };
     this.speed = 20 * Math.random();
     this.vector = {
@@ -14,8 +12,8 @@ export default class Particle {
       y: this.speed * (Math.random() - 0.5),
     };
     this.opacity = 1;
-    this.lifeLength = 20;
-    this.radius = 10 * Math.random();
+    this.lifeLength = lifeLength;
+    this.radius = radius * Math.random();
     this.color = "255, 255, 255";
     this.markedForDeletion = false;
   }
@@ -37,7 +35,7 @@ export default class Particle {
   update(deltaTime) {
     this.position.x += this.vector.x;
     this.position.y += this.vector.y;
-    this.opacity = this.opacity - this.opacity / this.lifeLength;
+    this.opacity = this.opacity - 1 / this.lifeLength;
     if (this.opacity <= 0) {
       this.opacity = 0;
       this.markedForDeletion = true;
