@@ -11,7 +11,7 @@ export default class Rocket {
       x: game.gameWidth / 2 - this.width / 2,
       y: game.gameHeight - this.height - 16,
     };
-    this.isExploding = false;
+    this.delete = false;
   }
 
   moveLeft() {

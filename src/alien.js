@@ -12,7 +12,7 @@ export default class Alien {
     this.position = { x: position.x, y: position.y };
     this.speed = game.gameSpeed;
     this.vector = { x: this.speed, y: 0 };
-    this.markedForDeletion = false;
+    this.delete = false;
     this.hitScore = 100;
   }
 
@@ -35,7 +35,7 @@ export default class Alien {
       this.sound.pause();
       this.sound.currentTime = 0;
       this.sound.play();
-      this.markedForDeletion = true;
+      this.delete = true;
       this.game.score = this.game.score + this.hitScore;
       this.game.laser.reset();
     }

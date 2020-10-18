@@ -5,6 +5,7 @@ import Laser from "./laser";
 import Particle from "./particle";
 import { levels, buildLevel } from "./levels";
 import { GAMESTATE, LIVES } from "./constants";
+import Explosion from "./explosion";
 
 export default class Game {
   constructor(gameWidth, gameHeight, assets) {
@@ -19,8 +20,8 @@ export default class Game {
     this.gameObjects = [];
     this.lives = LIVES;
     this.aliens = [];
-    this.explosions = [];
-    this.rocketExplosion = [];
+    this.alienExplosions = [];
+    this.rocketExplosion = null;
     this.level = 0;
     this.score = 0;
 
@@ -31,9 +32,9 @@ export default class Game {
     this.level = 0;
     this.lives = LIVES;
     this.score = 0;
-    this.explosions = [];
-    this.rocketExplosion = [];
-    this.rocket.isExploding = false;
+    this.alienExplosions = [];
+    this.rocketExplosion = null;
+    this.rocket.delete = false;
   }
 
   start() {
@@ -61,12 +62,15 @@ export default class Game {
     deathSound.play();
     this.lives--;
     this.laser.reset();
-    this.rocket.isExploding = true;
-    for (let i = 0; i < 40; i++) {
-      this.rocketExplosion.push(
-        new Particle(this, this.rocket.position, 40, 150)
-      );
-    }
+    this.rocket.delete = true;
+    this.rocketExplosion = new Explosion(
+      this,
+      this.rocket.position,
+      8,
+      80,
+      100
+    );
+    this.gameObjects.push(this.rocketExplosion);
     this.aliens.forEach((alien) => {
       alien.position.y = -600;
     });
@@ -94,35 +98,38 @@ export default class Game {
     [
       ...this.gameObjects,
       ...this.aliens,
-      ...this.explosions,
-      ...this.rocketExplosion,
+      ...this.alienExplosions,
     ].forEach((object) => object.update(deltaTime));
 
-    this.explosions = this.explosions.filter(
-      (particle) => !particle.markedForDeletion
+    this.alienExplosions = this.alienExplosions.filter(
+      (particle) => !particle.delete
     );
 
-    this.rocketExplosion = this.rocketExplosion.filter(
-      (particle) => !particle.markedForDeletion
+    this.gameObjects = this.gameObjects.filter(
+      (gameObject) => !gameObject.delete
     );
 
-    if (this.rocketExplosion.length === 0) this.rocket.isExploding = false;
+    if (this.rocketExplosion && this.rocketExplosion.delete) {
+      this.rocketExplosion = null;
+      this.rocket.delete = false;
+      this.gameObjects.push(this.rocket);
+    }
+
     this.aliens.forEach((alien) => {
-      if (alien.markedForDeletion) {
+      if (alien.delete) {
         for (let i = 0; i < 10; i++) {
-          this.explosions.push(new Particle(this, alien.position, 20, 30));
+          this.alienExplosions.push(new Particle(this, alien.position, 20, 30));
         }
       }
     });
-    this.aliens = this.aliens.filter((alien) => !alien.markedForDeletion);
+    this.aliens = this.aliens.filter((alien) => !alien.delete);
   }
 
   draw(ctx) {
     [
       ...this.gameObjects,
       ...this.aliens,
-      ...this.explosions,
-      ...this.rocketExplosion,
+      ...this.alienExplosions,
     ].forEach((object) => object.draw(ctx));
 
     if (this.gamestate !== GAMESTATE.MENU) {

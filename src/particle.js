@@ -15,7 +15,7 @@ export default class Particle {
     this.lifeLength = lifeLength;
     this.radius = radius * Math.random();
     this.color = "255, 255, 255";
-    this.markedForDeletion = false;
+    this.delete = false;
   }
 
   draw(ctx) {
@@ -38,7 +38,7 @@ export default class Particle {
     this.opacity = this.opacity - 1 / this.lifeLength;
     if (this.opacity <= 0) {
       this.opacity = 0;
-      this.markedForDeletion = true;
+      this.delete = true;
     }
   }
 }

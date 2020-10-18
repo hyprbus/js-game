@@ -13,6 +13,7 @@
 
 - game objects super class: width, height, game, position: { x, y }
 - sound loading returns object the same way as image loading
+- particles as explosion object, also replace alien explosion in game
 
 ### tooling
 
