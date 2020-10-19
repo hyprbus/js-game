@@ -3,7 +3,7 @@ import { GAMESTATE } from "./constants";
 export default class Laser {
   constructor(game) {
     this.image = game.assets.images.laser;
-    this.sound = game.assets.sounds[1];
+    this.sound = game.assets.sounds.laser;
     this.gameWidth = game.gameWidth;
     this.gameHeight = game.gameHeight;
     this.game = game;

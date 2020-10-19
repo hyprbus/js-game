@@ -7,13 +7,14 @@
 ## todo
 
 - finish game screen when all levels won
+- alien boss at end of each level
 - animate rocket on turn left / right
+- animate aliens
 
 ### refactor & bugs
 
 - game objects super class: width, height, game, position: { x, y }
-- sound loading returns object the same way as image loading
-- particles as explosion object, also replace alien explosion in game
+- fast shot will skip over aliens: how to fix?
 
 ### tooling
 
@@ -31,3 +32,5 @@
 - lives counter
 - how to reset after life lost
 - levels
+- particles as explosion object, also replace alien explosion in game
+- sound loading returns object the same way as image loading

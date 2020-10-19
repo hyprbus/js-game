@@ -3,7 +3,7 @@ import { detectCollision } from "./detectCollision";
 export default class Alien {
   constructor(game, position) {
     this.image = game.assets.images.alien;
-    this.sound = game.assets.sounds[2];
+    this.sound = game.assets.sounds.explosion;
     this.gameWidth = game.gameWidth;
     this.gameHeight = game.gameHeight;
     this.game = game;

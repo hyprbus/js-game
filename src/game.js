@@ -2,7 +2,6 @@ import Rocket from "./rocket";
 import Background from "./background";
 import InputHandler from "./input";
 import Laser from "./laser";
-import Particle from "./particle";
 import { levels, buildLevel } from "./levels";
 import { GAMESTATE, LIVES } from "./constants";
 import Explosion from "./explosion";
@@ -56,7 +55,7 @@ export default class Game {
   }
 
   rocketHitByAlien() {
-    const deathSound = this.assets.sounds[3];
+    const deathSound = this.assets.sounds.death;
     deathSound.pause();
     deathSound.currentTime = 0;
     deathSound.play();
@@ -102,7 +101,7 @@ export default class Game {
     ].forEach((object) => object.update(deltaTime));
 
     this.alienExplosions = this.alienExplosions.filter(
-      (particle) => !particle.delete
+      (explosion) => !explosion.delete
     );
 
     this.gameObjects = this.gameObjects.filter(
@@ -117,9 +116,9 @@ export default class Game {
 
     this.aliens.forEach((alien) => {
       if (alien.delete) {
-        for (let i = 0; i < 10; i++) {
-          this.alienExplosions.push(new Particle(this, alien.position, 20, 30));
-        }
+        this.alienExplosions.push(
+          new Explosion(this, alien.position, 8, 20, 24)
+        );
       }
     });
     this.aliens = this.aliens.filter((alien) => !alien.delete);

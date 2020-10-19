@@ -9,10 +9,19 @@ const loadImage = (imageData) =>
     img.src = imageData[imageID];
   });
 
-export const loadImages = async (imagesData) => {
+const loadSound = (soundData) =>
+  new Promise((resolve, reject) => {
+    const sound = new Audio();
+    const soundID = Object.keys(soundData)[0];
+    sound.addEventListener("loadeddata", () => resolve({ [soundID]: sound }));
+    sound.addEventListener("error", reject);
+    sound.src = soundData[soundID];
+  });
+
+const loadAssets = (loadFunction) => async (imagesData) => {
   try {
     const imageArray = await Promise.all(
-      imagesData.map((urlObj) => loadImage(urlObj))
+      imagesData.map((urlObj) => loadFunction(urlObj))
     );
     let images = {};
     imageArray.forEach(
@@ -24,4 +33,5 @@ export const loadImages = async (imagesData) => {
   }
 };
 
-// handle resolve of promise and making it into an object
+export const loadImages = loadAssets(loadImage);
+export const loadSounds = loadAssets(loadSound);
