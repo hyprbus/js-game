@@ -13,6 +13,7 @@
 
 ### refactor & bugs
 
+- extract game state into separate logic?
 - game objects super class: width, height, game, position: { x, y }
 - fast shot will skip over aliens: how to fix?
 
