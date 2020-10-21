@@ -28,8 +28,8 @@ export function buildLevel(game, level) {
     row.forEach((alien, alienIndex) => {
       if (alien === 1) {
         let position = {
-          x: 10 + 32 * alienIndex,
-          y: 10 + 32 * rowIndex,
+          x: 16 + 32 * alienIndex,
+          y: 16 + 32 * rowIndex,
         };
         aliens.push(new Alien(game, position));
       }

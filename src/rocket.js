@@ -5,7 +5,7 @@ export default class Rocket {
     this.image = game.assets.images.rocket;
     this.width = 16;
     this.height = 16;
-    this.maxSpeed = 7;
+    this.maxSpeed = 4;
     this.speed = 0;
     this.position = {
       x: game.gameWidth / 2 - this.width / 2,

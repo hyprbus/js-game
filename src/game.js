@@ -11,7 +11,7 @@ export default class Game {
     this.gameWidth = gameWidth;
     this.gameHeight = gameHeight;
     this.gamestate = GAMESTATE.MENU;
-    this.gameSpeed = 5;
+    this.gameSpeed = 2;
     this.assets = assets;
     this.rocket = new Rocket(this);
     this.laser = new Laser(this);
@@ -40,11 +40,15 @@ export default class Game {
     if (
       this.gamestate !== GAMESTATE.MENU &&
       this.gamestate !== GAMESTATE.NEWLEVEL &&
-      this.gamestate !== GAMESTATE.GAMEOVER
+      this.gamestate !== GAMESTATE.GAMEOVER &&
+      this.gamestate !== GAMESTATE.WON
     )
       return;
 
-    if (this.gamestate === GAMESTATE.GAMEOVER) {
+    if (
+      this.gamestate === GAMESTATE.GAMEOVER ||
+      this.gamestate === GAMESTATE.WON
+    ) {
       this.reset();
     }
 
@@ -71,7 +75,7 @@ export default class Game {
     );
     this.gameObjects.push(this.rocketExplosion);
     this.aliens.forEach((alien) => {
-      alien.position.y = -600;
+      alien.position.y = -300;
     });
   }
 
@@ -83,15 +87,18 @@ export default class Game {
 
     if (
       this.gamestate === GAMESTATE.PAUSED ||
-      this.gamestate === GAMESTATE.MENU ||
-      this.gamestate === GAMESTATE.GAMEOVER
+      this.gamestate === GAMESTATE.MENU
     )
       return;
 
     if (this.aliens.length === 0) {
-      this.level++;
-      this.gamestate = GAMESTATE.NEWLEVEL;
-      this.start();
+      if (this.level === levels.length - 1) {
+        this.gamestate = GAMESTATE.WON;
+      } else {
+        this.level++;
+        this.gamestate = GAMESTATE.NEWLEVEL;
+        this.start();
+      }
     }
 
     [
@@ -132,13 +139,13 @@ export default class Game {
     ].forEach((object) => object.draw(ctx));
 
     if (this.gamestate !== GAMESTATE.MENU) {
-      ctx.font = "20px Courier";
+      ctx.font = "12px Courier";
       ctx.fillStyle = "yellow";
       ctx.textAlign = "left";
       ctx.fillText(
         `Lives: ${this.lives} Score: ${this.score} Level: ${this.level}`,
-        16,
-        32
+        8,
+        16
       );
     }
 
@@ -147,7 +154,7 @@ export default class Game {
       ctx.fillStyle = "rgba(0,0,0,0.5)";
       ctx.fill();
 
-      ctx.font = "30px Arial";
+      ctx.font = "20px Arial";
       ctx.fillStyle = "white";
       ctx.textAlign = "center";
       ctx.fillText("Paused", this.gameWidth / 2, this.gameHeight / 2);
@@ -168,11 +175,7 @@ export default class Game {
       );
     }
     if (this.gamestate === GAMESTATE.GAMEOVER) {
-      ctx.rect(0, 0, this.gameWidth, this.gameHeight);
-      ctx.fillStyle = "rgba(0,0,0,1)";
-      ctx.fill();
-
-      ctx.font = "30px Arial";
+      ctx.font = "20px Arial";
       ctx.fillStyle = "white";
       ctx.textAlign = "center";
       ctx.fillText("GAME OVER", this.gameWidth / 2, this.gameHeight / 2);
@@ -182,9 +185,25 @@ export default class Game {
         this.gameHeight / 2 + 40
       );
     }
+
+    if (this.gamestate === GAMESTATE.WON) {
+      ctx.font = "20px Courier";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText(
+        "You won! Earth is saved.",
+        this.gameWidth / 2,
+        this.gameHeight / 2
+      );
+    }
   }
 
   togglePause() {
+    if (
+      this.gamestate !== GAMESTATE.RUNNING ||
+      this.gamestate !== GAMESTATE.PAUSED
+    )
+      return;
     if (this.gamestate == GAMESTATE.PAUSED) {
       this.gamestate = GAMESTATE.RUNNING;
     } else {

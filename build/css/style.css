@@ -1,12 +1,13 @@
 #ctx {
-  image-rendering: -moz-crisp-edges;
-  image-rendering: -webkit-crisp-edges;
   image-rendering: pixelated;
-  image-rendering: crisp-edges;
   border: 1px solid red;
+  width: 800px;
+  height: 600px;
 }
 
 body {
+  font-smooth: never;
+  -webkit-font-smoothing: none;
   max-width: 1024px;
   margin: 0 auto;
   display: flex;

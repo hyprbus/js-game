@@ -12,7 +12,7 @@ export default class Laser {
     this.position = { x: 400, y: 550 };
     this.isShooting = false;
     this.reset();
-    this.speed = { x: 0, y: -8 };
+    this.speed = { x: 0, y: -4 };
     this.velocity;
   }
 

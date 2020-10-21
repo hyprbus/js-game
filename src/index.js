@@ -15,8 +15,8 @@ const soundFiles = [
   { death: "audio/death.mp3" },
 ];
 const gameCanvasId = "ctx";
-const GAME_WIDTH = 800;
-const GAME_HEIGHT = 600;
+const GAME_WIDTH = 400;
+const GAME_HEIGHT = 300;
 const ctx = createGameCanvas(gameCanvasId, GAME_WIDTH, GAME_HEIGHT);
 
 let lastTime = 0;

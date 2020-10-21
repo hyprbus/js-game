@@ -14,11 +14,19 @@ export default class Alien {
     this.vector = { x: this.speed, y: 0 };
     this.delete = false;
     this.hitScore = 100;
+    this.sprites = [0, 1];
+    this.spriteIndex = 0;
+    this.animationRate = 10;
+    this.animationRateCounter = 0;
   }
 
   draw(ctx) {
     ctx.drawImage(
       this.image,
+      this.sprites[this.spriteIndex] * this.width,
+      0,
+      this.width,
+      this.height,
       this.position.x,
       this.position.y,
       this.width,
@@ -49,12 +57,19 @@ export default class Alien {
 
     if (this.position.x >= this.gameWidth - this.width) {
       this.vector.x = -this.speed;
-      this.vector.y = Math.random() * this.speed;
+      this.vector.y = Math.round(Math.random()) * this.speed;
     }
 
     if (this.position.x <= 0) {
       this.vector.x = this.speed;
-      this.vector.y = Math.random() * this.speed;
+      this.vector.y = Math.round(Math.random()) * this.speed;
+    }
+
+    this.animationRateCounter++;
+    if (this.animationRateCounter === this.animationRate) {
+      this.animationRateCounter = 0;
+      this.spriteIndex++;
+      if (this.spriteIndex === this.sprites.length) this.spriteIndex = 0;
     }
   }
 }

@@ -12,7 +12,7 @@ export default class Background {
 
   reset() {
     this.position = { x: 0, y: 0 };
-    this.speed = { x: 0, y: 0.5 };
+    this.speed = { x: 0, y: 2 };
   }
 
   draw(ctx) {
