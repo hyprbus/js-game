@@ -1,19 +1,33 @@
 import Particle from "./particle";
 
 export default class Explosion {
-  constructor(game, position, radius = 10, lifeLength = 20, noOfParticles = 8) {
+  constructor(
+    game,
+    position,
+    radius = 10,
+    lifeLength = 20,
+    noOfParticles = 8,
+    color = "255, 255, 255"
+  ) {
     this.gameWidth = game.gameWidth;
     this.gameHeight = game.gameHeight;
     this.game = game;
     this.particles = [];
-    this.createParticles(game, position, radius, lifeLength, noOfParticles);
+    this.createParticles(
+      game,
+      position,
+      radius,
+      lifeLength,
+      noOfParticles,
+      color
+    );
     this.delete = false;
   }
 
-  createParticles(game, position, radius, lifeLength, noOfParticles) {
+  createParticles(game, position, radius, lifeLength, noOfParticles, color) {
     for (let i = 0; i < noOfParticles; i++) {
       this.particles.push(
-        new Particle(this.game, position, radius, lifeLength)
+        new Particle(this.game, position, radius, lifeLength, color)
       );
     }
   }

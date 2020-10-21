@@ -23,6 +23,7 @@ export default class Game {
     this.rocketExplosion = null;
     this.level = 0;
     this.score = 0;
+    this.musicIsPlaying = false;
 
     new InputHandler(this.rocket, this.laser, this);
   }
@@ -71,7 +72,8 @@ export default class Game {
       this.rocket.position,
       8,
       80,
-      100
+      100,
+      "0, 255, 255"
     );
     this.gameObjects.push(this.rocketExplosion);
     this.aliens.forEach((alien) => {
@@ -90,6 +92,14 @@ export default class Game {
       this.gamestate === GAMESTATE.MENU
     )
       return;
+
+    if (this.musicIsPlaying === false) {
+      this.musicIsPlaying = true;
+      const music = this.assets.sounds.soundtrack;
+      music.loop = true;
+      music.volume = 0.5;
+      music.play();
+    }
 
     if (this.aliens.length === 0) {
       if (this.level === levels.length - 1) {
@@ -124,7 +134,7 @@ export default class Game {
     this.aliens.forEach((alien) => {
       if (alien.delete) {
         this.alienExplosions.push(
-          new Explosion(this, alien.position, 8, 20, 24)
+          new Explosion(this, alien.position, 8, 30, 24, "255, 255, 0")
         );
       }
     });

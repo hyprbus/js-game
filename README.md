@@ -8,9 +8,11 @@
 
 - keep animations rolling after game over
 - alien boss at end of each level
+- music handling: fade out at selected state changes, restart when new game
 
 ### refactor & bugs
 
+- aliens cannot move horisontally if too low to avoid unavoidable deaths of rocket
 - remove rocket if game over, keep animation running
 - extract game state into separate logic?
 - fast shot will skip over aliens: how to fix?
@@ -36,3 +38,4 @@
 - scale images without antialiasing
 - animate aliens
 - finish game screen when all levels won
+- play music on start

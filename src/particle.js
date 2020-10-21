@@ -1,7 +1,13 @@
 import { rgbaToString } from "./utils";
 
 export default class Particle {
-  constructor(game, position, radius, lifeLength = 20) {
+  constructor(
+    game,
+    position,
+    radius,
+    lifeLength = 20,
+    color = "255, 255, 255"
+  ) {
     this.gameWidth = game.gameWidth;
     this.gameHeight = game.gameHeight;
     this.game = game;
@@ -14,7 +20,7 @@ export default class Particle {
     this.opacity = 1;
     this.lifeLength = lifeLength;
     this.radius = radius * Math.random();
-    this.color = "255, 255, 255";
+    this.color = color;
     this.delete = false;
   }
 
