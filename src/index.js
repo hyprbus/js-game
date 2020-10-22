@@ -7,6 +7,7 @@ const imageFiles = [
   { rocket: "images/rocket.png" },
   { laser: "images/laser.png" },
   { alien: "images/alien.png" },
+  { alienBoss: "images/alien-boss.png" },
 ];
 const soundFiles = [
   { soundtrack: "audio/game.mp3" },

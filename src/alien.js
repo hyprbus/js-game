@@ -1,23 +1,34 @@
 import { detectCollision } from "./detectCollision";
 
 export default class Alien {
-  constructor(game, position) {
-    this.image = game.assets.images.alien;
+  constructor({
+    game,
+    position,
+    imageKey,
+    width,
+    height,
+    initVector,
+    hitScore,
+    spriteAnimationOrder,
+    movementAlgorithm,
+  }) {
+    this.image = game.assets.images[imageKey];
     this.sound = game.assets.sounds.explosion;
     this.gameWidth = game.gameWidth;
     this.gameHeight = game.gameHeight;
     this.game = game;
-    this.width = 16;
-    this.height = 16;
-    this.position = { x: position.x, y: position.y };
+    this.width = width;
+    this.height = height;
+    this.position = { ...position };
     this.speed = game.gameSpeed;
-    this.vector = { x: this.speed, y: 0 };
+    this.vector = { ...initVector };
     this.delete = false;
-    this.hitScore = 100;
-    this.sprites = [0, 1];
+    this.hitScore = hitScore;
+    this.sprites = spriteAnimationOrder;
     this.spriteIndex = 0;
     this.animationRate = 10;
     this.animationRateCounter = 0;
+    this.movementAlgorithm = movementAlgorithm;
   }
 
   draw(ctx) {
@@ -55,15 +66,7 @@ export default class Alien {
       this.position.y = -20;
     }
 
-    if (this.position.x >= this.gameWidth - this.width) {
-      this.vector.x = -this.speed;
-      this.vector.y = Math.round(Math.random()) * this.speed;
-    }
-
-    if (this.position.x <= 0) {
-      this.vector.x = this.speed;
-      this.vector.y = Math.round(Math.random()) * this.speed;
-    }
+    this.movementAlgorithm(this);
 
     this.animationRateCounter++;
     if (this.animationRateCounter === this.animationRate) {
