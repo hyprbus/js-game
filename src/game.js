@@ -23,6 +23,7 @@ export default class Game {
     this.rocketExplosion = null;
     this.level = 0;
     this.score = 0;
+    this.music = this.assets.sounds.soundtrack;
     this.musicIsPlaying = false;
 
     new InputHandler(this.rocket, this.laser, this);
@@ -32,31 +33,24 @@ export default class Game {
     this.level = 0;
     this.lives = LIVES;
     this.score = 0;
+    this.gamestate = GAMESTATE.MENU;
+  }
+
+  startLevel() {
     this.alienExplosions = [];
     this.rocketExplosion = null;
     this.rocket.delete = false;
-  }
-
-  start() {
-    if (
-      this.gamestate !== GAMESTATE.MENU &&
-      this.gamestate !== GAMESTATE.NEWLEVEL &&
-      this.gamestate !== GAMESTATE.GAMEOVER &&
-      this.gamestate !== GAMESTATE.WON
-    )
-      return;
-
-    if (
-      this.gamestate === GAMESTATE.GAMEOVER ||
-      this.gamestate === GAMESTATE.WON
-    ) {
-      this.reset();
-    }
-
     this.aliens = buildLevel(this, levels[this.level]);
     this.gameObjects = [this.background, this.rocket, this.laser];
-
     this.gamestate = GAMESTATE.RUNNING;
+  }
+
+  startGame() {
+    if (this.gamestate !== GAMESTATE.RUNNING) {
+      this.reset();
+      this.startLevel();
+    }
+    return;
   }
 
   rocketHitByAlien() {
@@ -83,7 +77,6 @@ export default class Game {
 
   update(deltaTime) {
     if (this.lives === 0) {
-      this.reset();
       this.gamestate = GAMESTATE.GAMEOVER;
     }
 
@@ -95,19 +88,17 @@ export default class Game {
 
     if (this.musicIsPlaying === false) {
       this.musicIsPlaying = true;
-      const music = this.assets.sounds.soundtrack;
-      music.loop = true;
-      music.volume = 0.5;
-      music.play();
+      this.music.loop = true;
+      this.music.volume = 0.5;
+      this.music.play();
     }
 
-    if (this.aliens.length === 0) {
+    if (this.aliens.length === 0 && this.alienExplosions.length === 0) {
       if (this.level === levels.length - 1) {
         this.gamestate = GAMESTATE.WON;
       } else {
         this.level++;
-        this.gamestate = GAMESTATE.NEWLEVEL;
-        this.start();
+        this.startLevel();
       }
     }
 
@@ -125,7 +116,11 @@ export default class Game {
       (gameObject) => !gameObject.delete
     );
 
-    if (this.rocketExplosion && this.rocketExplosion.delete) {
+    if (
+      this.rocketExplosion &&
+      this.rocketExplosion.delete &&
+      this.gamestate !== GAMESTATE.GAMEOVER
+    ) {
       this.rocketExplosion = null;
       this.rocket.delete = false;
       this.gameObjects.push(this.rocket);
@@ -210,14 +205,16 @@ export default class Game {
 
   togglePause() {
     if (
-      this.gamestate !== GAMESTATE.RUNNING ||
+      this.gamestate !== GAMESTATE.RUNNING &&
       this.gamestate !== GAMESTATE.PAUSED
     )
       return;
-    if (this.gamestate == GAMESTATE.PAUSED) {
+    if (this.gamestate === GAMESTATE.PAUSED) {
       this.gamestate = GAMESTATE.RUNNING;
     } else {
       this.gamestate = GAMESTATE.PAUSED;
+      this.musicIsPlaying = false;
+      this.music.pause();
     }
   }
 }

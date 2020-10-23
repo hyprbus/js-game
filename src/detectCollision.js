@@ -1,4 +1,5 @@
 export function detectCollision(source, target) {
+  if (source.delete || target.delete) return;
   let topOfSource = source.position.y;
   let leftSideOfSource = source.position.x;
   let rightSideOfSource = source.position.x + source.width;

@@ -19,7 +19,7 @@ export default class InputHandler {
           break;
 
         case 13:
-          game.start();
+          game.startGame();
           break;
       }
     });
