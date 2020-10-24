@@ -7,7 +7,6 @@
 ## features
 
 - alien boss has to be hit three times before death
-- alien boss also has movement right + left to make it glide in addition to pendulum movement
 - explosion and sound get bigger and bigger after hit
 - music handling: fade out at selected state changes, restart when new game
 - improve music
@@ -52,3 +51,4 @@
 - do not switch levels until no alien explosions
 - keep animations rolling after game over
 - alien boss new graphic, new movement
+- alien boss also has movement right + left to make it glide in addition to pendulum movement
