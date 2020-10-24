@@ -89,7 +89,7 @@ export default class Game {
     if (this.musicIsPlaying === false) {
       this.musicIsPlaying = true;
       this.music.loop = true;
-      this.music.volume = 1;
+      this.music.volume = 0.7;
       this.music.play();
     }
 

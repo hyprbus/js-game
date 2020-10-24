@@ -1,11 +1,9 @@
 import Alien from "./alien";
 import { alienMovement, alienBossMovement } from "./movement";
 
-const levelK = [[2], [0], [1, 1]];
+const level0 = [[1, 0, 1, 0, 1]];
 
-const level0 = [[1]];
-
-const level1 = [[1, 1, 1, 2, 1]];
+const level1 = [[0, 0, 2], [0], [1, 1, 1, 1, 1]];
 
 const level2 = [
   [1, 0, 1, 0, 1],
@@ -30,7 +28,9 @@ const level5 = [
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ];
 
-export const levels = [level0, levelK, level1, level2, level3, level4, level5];
+const level6 = [[0, 2, 0, 0, 2, 0, 0, 2], [0], [0, 0, 2, 0, 0, 2]];
+
+export const levels = [level0, level1, level2, level3, level4, level5, level6];
 
 export function buildLevel(game, level) {
   let aliens = [];
