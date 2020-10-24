@@ -10,7 +10,7 @@ const imageFiles = [
   { alienBoss: "images/alien-boss.png" },
 ];
 const soundFiles = [
-  { soundtrack: "audio/game.mp3" },
+  { soundtrack: "audio/alien-attack-soundtrack.mp3" },
   { laser: "audio/laser.mp3" },
   { explosion: "audio/explosion.mp3" },
   { death: "audio/death.mp3" },
