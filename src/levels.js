@@ -1,13 +1,7 @@
 import Alien from "./alien";
 import { alienMovement, alienBossMovement } from "./movement";
 
-const levelK = [
-  [1, 0, 1],
-  [1, 1, 0],
-  [1, 0, 0],
-  [1, 1, 0],
-  [1, 0, 1],
-];
+const levelK = [[2], [0], [1, 1]];
 
 const level0 = [[1]];
 
@@ -36,7 +30,7 @@ const level5 = [
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ];
 
-export const levels = [levelK, level0, level1, level2, level3, level4, level5];
+export const levels = [level0, levelK, level1, level2, level3, level4, level5];
 
 export function buildLevel(game, level) {
   let aliens = [];
@@ -70,15 +64,19 @@ export function buildLevel(game, level) {
             game: game,
             position: position,
             imageKey: "alienBoss",
-            width: 16,
-            height: 24,
+            width: 32,
+            height: 32,
             initVector: {
               x: game.gameSpeed,
               y: 0,
             },
             hitScore: 500,
             spriteAnimationOrder: [0, 1],
-            movementAlgorithm: alienBossMovement,
+            movementAlgorithm: alienBossMovement({
+              angle: 0,
+              steps: 120,
+              swingWidth: 80,
+            }),
           })
         );
       }

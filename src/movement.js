@@ -16,16 +16,22 @@ export function alienMovement(gameObject) {
     gameObject.vector.y = gameObject.speed;
 }
 
-export function alienBossMovement(gameObject) {
-  gameObject.vector.y = gameObject.speed;
+export const alienBossMovement = ({ angle, steps, swingWidth }) => (
+  gameObject
+) => {
+  gameObject.vector.y = Math.abs(gameObject.speed);
+  if (
+    gameObject.position.x >= gameObject.gameWidth - gameObject.width ||
+    gameObject.position.x <= 0
+  ) {
+    steps = -steps;
+    gameObject.speed = -gameObject.speed;
+  }
+  const prevAngle = angle;
+  angle = nextAngle(angle, steps);
+  gameObject.vector.x =
+    swingWidth * (Math.cos(prevAngle) - Math.cos(angle)) + gameObject.speed;
+};
 
-  if (gameObject.position.x >= gameObject.gameWidth - gameObject.width) {
-    gameObject.vector.x = -gameObject.speed;
-    return;
-  }
-  if (gameObject.position.x <= 0) {
-    gameObject.vector.x = gameObject.speed;
-    return;
-  }
-  if (Math.random() < 0.03) gameObject.vector.x = -gameObject.vector.x;
-}
+const nextAngle = (angle, steps) =>
+  angle < 2 * Math.PI ? angle + (2 * Math.PI) / steps : angle - 2 * Math.PI;

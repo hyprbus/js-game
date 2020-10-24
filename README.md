@@ -6,9 +6,13 @@
 
 ## features
 
-- keep animations rolling after game over
-- alien boss at end of each level
+- alien boss has to be hit three times before death
+- alien boss also has movement right + left to make it glide in addition to pendulum movement
+- explosion and sound get bigger and bigger after hit
 - music handling: fade out at selected state changes, restart when new game
+- improve music
+- change rocket explosion sound
+- change laser sound
 
 ### bugs
 
@@ -46,3 +50,5 @@
 - remove rocket if game over, keep animation running
 - do not reset lives and score when game over, only on game start
 - do not switch levels until no alien explosions
+- keep animations rolling after game over
+- alien boss new graphic, new movement
