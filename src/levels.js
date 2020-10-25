@@ -1,5 +1,6 @@
 import Alien from "./alien";
 import { alienMovement, alienBossMovement } from "./movement";
+import { ALIENTYPE } from "./constants";
 
 const level0 = [[1, 0, 1, 0, 1]];
 
@@ -40,9 +41,12 @@ export function buildLevel(game, level) {
         x: 16 + 32 * alienIndex,
         y: 16 + 32 * rowIndex,
       };
+      const id = (rowIndex + 1) * 10 + alienIndex;
       if (alien === 1) {
         aliens.push(
           new Alien({
+            ID: id,
+            alienType: ALIENTYPE.NORMAL,
             game: game,
             position: position,
             imageKey: "alien",
@@ -61,6 +65,8 @@ export function buildLevel(game, level) {
       if (alien === 2) {
         aliens.push(
           new Alien({
+            ID: id,
+            alienType: ALIENTYPE.BOSS,
             game: game,
             position: position,
             imageKey: "alienBoss",

@@ -6,3 +6,8 @@ export const GAMESTATE = {
 };
 
 export const LIVES = 3;
+
+export const ALIENTYPE = {
+  NORMAL: 1,
+  BOSS: 5,
+};

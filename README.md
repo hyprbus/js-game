@@ -6,7 +6,8 @@
 
 ## features
 
-- aliens change direction if collision with other alien
+- aliens change direction if collision with other alien:
+  - https://spicyyoghurt.com/tutorials/html5-javascript-game-development/collision-detection-physics
 - new level enters slowly
 - alien boss has to be hit three times before death
 - explosion and sound get bigger and bigger after hit

@@ -1,7 +1,10 @@
 import { detectCollision } from "./detectCollision";
+import { ALIENTYPE } from "./constants";
 
 export default class Alien {
   constructor({
+    ID,
+    alienType,
     game,
     position,
     imageKey,
@@ -29,6 +32,8 @@ export default class Alien {
     this.animationRate = 10;
     this.animationRateCounter = 0;
     this.movementAlgorithm = movementAlgorithm;
+    this.ID = ID;
+    this.alienType = alienType;
   }
 
   draw(ctx) {
@@ -59,6 +64,20 @@ export default class Alien {
       this.game.score = this.game.score + this.hitScore;
       this.game.laser.reset();
     }
+
+    // change direction if hitting another alien and not boss and on-screen
+    // if (this.alienType !== ALIENTYPE.BOSS && this.position.x >= 0) {
+    //   this.game.aliens
+    //     .filter(
+    //       (alien) => alien.ID !== this.ID && alien.alienType !== ALIENTYPE.BOSS
+    //     )
+    //     .forEach((otherAlien) => {
+    //       if (detectCollision(this, otherAlien)) {
+    //         this.vector.x = -this.vector.x;
+    //         otherAlien.vector.x = -this.vector.x;
+    //       }
+    //     });
+    // }
 
     this.position.x += this.vector.x;
     this.position.y += this.vector.y;

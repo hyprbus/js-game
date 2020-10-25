@@ -5,7 +5,8 @@
   "author": "SN",
   "license": "MIT",
   "scripts": {
-    "build:dev": "webpack --mode=development"
+    "build:dev": "webpack --mode=development",
+    "build": "webpack --mode=production"
   },
   "devDependencies": {
     "prettier": "^2.1.2",
