@@ -57,6 +57,7 @@ export default class Game {
     const deathSound = this.assets.sounds.death;
     deathSound.pause();
     deathSound.currentTime = 0;
+    deathSound.volume = 0.4;
     deathSound.play();
     this.lives--;
     this.laser.reset();
@@ -89,7 +90,7 @@ export default class Game {
     if (this.musicIsPlaying === false) {
       this.musicIsPlaying = true;
       this.music.loop = true;
-      this.music.volume = 0.7;
+      this.music.volume = 1;
       this.music.play();
     }
 

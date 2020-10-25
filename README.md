@@ -6,15 +6,15 @@
 
 ## features
 
+- aliens change direction if collision with other alien
+- new level enters slowly
 - alien boss has to be hit three times before death
 - explosion and sound get bigger and bigger after hit
 - music handling: fade out at selected state changes, restart when new game
-- improve music
-- change rocket explosion sound
-- change laser sound
 
 ### bugs
 
+- gapless soundtrack loop: https://stackoverflow.com/questions/7330023/gapless-looping-audio-html5
 - fast shot will skip over aliens: how to fix?
 
 ### refactor
@@ -52,3 +52,6 @@
 - keep animations rolling after game over
 - alien boss new graphic, new movement
 - alien boss also has movement right + left to make it glide in addition to pendulum movement
+- improve music
+- change rocket explosion sound
+- change laser sound

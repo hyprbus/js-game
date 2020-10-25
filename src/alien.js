@@ -53,6 +53,7 @@ export default class Alien {
     if (this.game.laser.isShooting && detectCollision(this.game.laser, this)) {
       this.sound.pause();
       this.sound.currentTime = 0;
+      this.sound.volume = 0.45;
       this.sound.play();
       this.delete = true;
       this.game.score = this.game.score + this.hitScore;
